@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { ButtonBack } from '../../../shared/ui/ButtonBack';
 import { Button } from '../../../shared/ui/Button';
 import { WithProtection } from '../../../shared/store/HOCs/WithProtection';
+import { Input } from '../../../shared/ui/Input';
 
 export const ProfilePage = WithProtection(() => {
 	return (
@@ -13,7 +14,7 @@ export const ProfilePage = WithProtection(() => {
 				<div className={s['form__row']}>
 					<label className={s['form__label']} htmlFor='name'>
 						{''}
-						<input
+						<Input
 							className={s['input']}
 							name='name'
 							id='name'
@@ -23,7 +24,7 @@ export const ProfilePage = WithProtection(() => {
 					</label>
 					<label className={s['form__label']}>
 						{''}
-						<input
+						<Input
 							className={s['input']}
 							name='about'
 							id='about'
@@ -35,7 +36,7 @@ export const ProfilePage = WithProtection(() => {
 				<div className={s['form__row']}>
 					<label className={s['form__label']}>
 						{''}
-						<input
+						<Input
 							className={s['input']}
 							name='avatar'
 							id='avatar'
@@ -45,7 +46,7 @@ export const ProfilePage = WithProtection(() => {
 					</label>
 					<label className={s['form__label']}>
 						{''}
-						<input
+						<Input
 							className={s['input']}
 							name='email'
 							id='email'
@@ -71,7 +72,7 @@ export const ProfilePage = WithProtection(() => {
 				<div className={classNames(s['form__row'], s['form__row_min'])}>
 					<label className={s['form__label']}>
 						{''}
-						<input
+						<Input
 							className={s['input']}
 							name='password'
 							id='password'
