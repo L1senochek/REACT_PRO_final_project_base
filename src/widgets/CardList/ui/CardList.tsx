@@ -1,10 +1,7 @@
-import { Card } from '../../../shared/ui/Card';
+import { Card } from '../../../entities/product';
 import s from './CardList.module.css';
+import { CardListProps } from './types';
 
-type CardListProps = {
-	title: string;
-	products: Product[];
-};
 export const CardList = ({ title, products }: CardListProps) => {
 	if (!products.length) {
 		return <h1 className='header-title'>Товар не найден</h1>;
