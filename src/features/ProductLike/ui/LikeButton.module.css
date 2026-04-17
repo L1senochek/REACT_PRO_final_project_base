@@ -1,0 +1,15 @@
+.card__favorite {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 32px;
+	height: 32px;
+	background: #ffffff;
+	border: none;
+	border-radius: 100%;
+	cursor: pointer;
+}
+
+.card__favorite_is-active svg path {
+	fill: #f44336;
+}
