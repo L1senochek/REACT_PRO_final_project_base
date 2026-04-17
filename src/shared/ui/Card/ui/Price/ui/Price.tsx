@@ -1,12 +1,8 @@
 import classNames from 'classnames';
 import s from './Price.module.css';
+import { PriceProps } from './types';
 
-type TPriceProps = {
-	price: number;
-	discountPrice: number;
-};
-
-export const Price = ({ price, discountPrice }: TPriceProps) => {
+export const Price = ({ price, discountPrice }: PriceProps) => {
 	return (
 		<div className={classNames(s['price-small'], s['price-wrap'])}>
 			<span className={classNames(s['price_old'], s['price_left'])}>

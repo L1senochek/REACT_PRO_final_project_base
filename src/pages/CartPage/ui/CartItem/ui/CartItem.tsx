@@ -4,11 +4,10 @@ import s from '../../CartPage.module.css';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { cartActions } from '../../../../../shared/store/slices/cart';
-import { CartCounter } from '../../../../../shared/ui/CartCounter';
+import { CartCounter } from '../../../../../features/CartCounter';
+import { CartItemProps } from './types';
+import { Button } from '../../../../../shared/ui/Button';
 
-type CartItemProps = {
-	product: CartProduct;
-};
 export const CartItem = ({ product }: CartItemProps) => {
 	const dispatch = useDispatch();
 	const { id, name, images, price, discount } = product;
@@ -48,9 +47,11 @@ export const CartItem = ({ product }: CartItemProps) => {
 								</div>
 							</div>
 						</div>
-						<button className={classNames(s['cart-item__bnt-trash'])}>
+						<Button
+							variant='unstyled'
+							className={classNames(s['cart-item__bnt-trash'])}>
 							<TrashIcon onClick={handleDelete} />
-						</button>
+						</Button>
 					</div>
 				</div>
 			</div>
