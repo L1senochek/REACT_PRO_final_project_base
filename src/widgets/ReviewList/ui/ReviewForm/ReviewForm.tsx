@@ -2,6 +2,7 @@ import { useState, ChangeEvent } from 'react';
 import classNames from 'classnames';
 import s from './ReviewForm.module.css';
 import { Rating } from '../../../../shared/ui/Rating';
+import { Button } from '../../../../shared/ui/Button';
 
 export const ReviewForm = () => {
 	const [reviewText, setReviewText] = useState('');
@@ -25,12 +26,13 @@ export const ReviewForm = () => {
 				placeholder='Напишите текст отзыва'
 				value={reviewText}
 				onChange={handleChange}></textarea>
-			<button
+			<Button
+				variant='unstyled'
 				type='submit'
 				className={classNames(s['form__btn'], s['pramary'])}
 				onClick={handleClick}>
 				Отправить отзыв
-			</button>
+			</Button>
 		</form>
 	);
 };

@@ -1,6 +1,7 @@
 import s from './ProfilePage.module.css';
 import classNames from 'classnames';
 import { ButtonBack } from '../../../shared/ui/ButtonBack';
+import { Button } from '../../../shared/ui/Button';
 import { WithProtection } from '../../../shared/store/HOCs/WithProtection';
 
 export const ProfilePage = WithProtection(() => {
@@ -54,7 +55,8 @@ export const ProfilePage = WithProtection(() => {
 					</label>
 				</div>
 
-				<button
+				<Button
+					variant='unstyled'
 					type='submit'
 					className={classNames(
 						s['form__btn'],
@@ -62,7 +64,7 @@ export const ProfilePage = WithProtection(() => {
 						s['maxContent']
 					)}>
 					Сохранить
-				</button>
+				</Button>
 			</form>
 			<h2 className={s['form__title']}>Изменить пароль</h2>
 			<form className={classNames(s['form'], s['form'])}>
@@ -78,7 +80,8 @@ export const ProfilePage = WithProtection(() => {
 						/>
 					</label>
 				</div>
-				<button
+				<Button
+					variant='unstyled'
 					type='submit'
 					className={classNames(
 						s['form__btn'],
@@ -86,7 +89,7 @@ export const ProfilePage = WithProtection(() => {
 						s['maxContent']
 					)}>
 					Сохранить
-				</button>
+				</Button>
 			</form>
 		</>
 	);
