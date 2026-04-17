@@ -1,14 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom';
-
 import { HomePage } from '../../../../pages/HomePage';
 import { ProductPage } from '../../../../pages/ProductPage';
 import { NotFoundPage } from '../../../../pages/NotFoundPage';
 import { ProfilePage } from '../../../../pages/ProfilePage';
 import { FavoritesPage } from '../../../../pages/FavoritesPage';
-import { App } from '../../../../app';
 import { SignUpPage } from '../../../../pages/SignUpPage';
 import { SignInPage } from '../../../../pages/SignInPage';
 import { CartPage } from '../../../../pages/CartPage';
+import { App } from '../../../App';
 
 export enum AppRoutes {
 	HOME = 'home',
