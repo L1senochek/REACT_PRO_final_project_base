@@ -1,0 +1,36 @@
+.search {
+	position: relative;
+	display: flex;
+	flex: 1 1;
+	align-items: center;
+}
+
+.searchInput {
+	padding-right: 60px;
+}
+
+.clearButton {
+	position: absolute;
+	right: 20px;
+	display: flex;
+	padding: 0;
+	background-color: transparent;
+	border: none;
+	outline: none;
+	cursor: pointer;
+}
+
+.clearButton svg {
+	fill: #7b8e98;
+}
+
+.clearButton:focus svg,
+.clearButton:hover svg {
+	fill: #feba0c;
+}
+
+@media (width <= 350px) {
+	.searchInput {
+		max-width: 400px;
+	}
+}

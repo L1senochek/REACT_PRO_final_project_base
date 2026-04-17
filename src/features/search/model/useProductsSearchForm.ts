@@ -1,23 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useDebounce } from '../../../hooks/useDebounce';
-import { useAppDispatch } from '../../../store/utils';
-import { productsActions } from '../../../store/slices/products';
+import { useDebounce } from '../../../shared/hooks/useDebounce';
+import { useAppDispatch } from '../../../shared/store/utils';
+import { productsActions } from '../../../shared/store/slices/products';
 
 const QUERY_SEARCH_PHRASE = 'q';
 
-export interface UseProductsSearchFormParams {
-	setProductsSearchFilter: (newFilter: string) => void;
-}
-
 export const useProductsSearchForm = () => {
 	const dispatch = useAppDispatch();
-
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [searchValue, setSearchValue] = useState(
 		() => searchParams.get(QUERY_SEARCH_PHRASE) ?? ''
 	);
-
 	const optimizedValue = useDebounce(searchValue, 500);
 
 	useEffect(() => {
@@ -34,8 +28,5 @@ export const useProductsSearchForm = () => {
 		setSearchParams(searchParams);
 	}, [searchParams, searchValue, setSearchParams]);
 
-	return {
-		searchValue,
-		setSearchValue,
-	};
+	return { searchValue, setSearchValue };
 };
