@@ -1,0 +1,31 @@
+.buttonCount {
+	display: inline-flex;
+	align-items: center;
+	height: 48px;
+	background-color: #ffffff;
+	border: 1px solid #cfd8dc;
+	border-radius: 100px;
+}
+
+.buttonCountPlus,
+.buttonCountMinus {
+	width: 40px;
+	height: 100%;
+	padding: 0;
+	font-size: 24px;
+	background-color: transparent;
+	border: none;
+	outline: none;
+	cursor: pointer;
+}
+
+.buttonCountNum {
+	display: inline-block;
+	width: 30px;
+	padding: 0;
+	font-weight: 700;
+	font-size: 21px;
+	line-height: 24px;
+	text-align: center;
+	border: none;
+}
