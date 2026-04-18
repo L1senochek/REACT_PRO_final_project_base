@@ -1,13 +1,16 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, memo, useCallback } from 'react';
 import { useSort } from '../model/useSort';
 
-export const Sort = () => {
+export const Sort = memo(() => {
 	const { sort, setSort, sortParams } = useSort();
 
-	const handleSortSelect = (e: ChangeEvent<HTMLSelectElement>) => {
-		const newSort = e.target.value as Sort;
-		setSort(newSort);
-	};
+	const handleSortSelect = useCallback(
+		(e: ChangeEvent<HTMLSelectElement>) => {
+			const newSort = e.target.value as Sort;
+			setSort(newSort);
+		},
+		[setSort]
+	);
 
 	return (
 		<select value={sort} onChange={handleSortSelect}>
@@ -18,4 +21,4 @@ export const Sort = () => {
 			))}
 		</select>
 	);
-};
+});

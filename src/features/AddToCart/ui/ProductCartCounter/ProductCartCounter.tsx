@@ -5,37 +5,41 @@ import { useAddToCart } from '../../../../shared/hooks/useAddToCart';
 import { ProductCartCounterProps } from './types';
 import { Button } from '../../../../shared/ui/Button';
 import { Input } from '../../../../shared/ui/Input';
+import { memo, useCallback } from 'react';
 
-export const ProductCartCounter = ({ product }: ProductCartCounterProps) => {
-	const { count, handleCount, handleCountMinus, handleCountPlus } =
-		useProductCartCounter();
-	const { addProductToCart } = useAddToCart();
+export const ProductCartCounter = memo(
+	({ product }: ProductCartCounterProps) => {
+		const { count, handleCount, handleCountMinus, handleCountPlus } =
+			useProductCartCounter();
+		const { addProductToCart } = useAddToCart();
+		const handleAddToCart = useCallback(() => {
+			addProductToCart({ ...product, count });
+		}, [addProductToCart, count, product]);
 
-	return (
-		<div className={classNames('product__btn-wrap')}>
-			<div className={s.buttonCount}>
-				<Button
-					variant='unstyled'
-					className={s.buttonCountMinus}
-					onClick={handleCountMinus}>
-					-
-				</Button>
-				<Input
-					type='number'
-					className={s.buttonCountNum}
-					value={count}
-					onChange={handleCount}
-				/>
-				<Button
-					variant='unstyled'
-					className={s.buttonCountPlus}
-					onClick={handleCountPlus}>
-					+
-				</Button>
+		return (
+			<div className={classNames('product__btn-wrap')}>
+				<div className={s.buttonCount}>
+					<Button
+						variant='unstyled'
+						className={s.buttonCountMinus}
+						onClick={handleCountMinus}>
+						-
+					</Button>
+					<Input
+						type='number'
+						className={s.buttonCountNum}
+						value={count}
+						onChange={handleCount}
+					/>
+					<Button
+						variant='unstyled'
+						className={s.buttonCountPlus}
+						onClick={handleCountPlus}>
+						+
+					</Button>
+				</div>
+				<Button onClick={handleAddToCart}>В корзину</Button>
 			</div>
-			<Button onClick={() => addProductToCart({ ...product, count })}>
-				В корзину
-			</Button>
-		</div>
-	);
-};
+		);
+	}
+);

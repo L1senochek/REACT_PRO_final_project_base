@@ -9,12 +9,17 @@ import { LikeButton } from '../../../features/ProductLike';
 import { CartCounter } from '../../../features/CartCounter';
 import { CardProps } from './types';
 import { Button } from '../../../shared/ui/Button';
+import { memo, useCallback } from 'react';
 
-export const Card = ({ product }: CardProps) => {
+export const Card = memo(({ product }: CardProps) => {
 	const { discount, price, name, tags, id, images } = product;
-	const cartProducts = useAppSelector(cartSelectors.getCartProducts);
-	const isProductInCart = cartProducts.some((p) => p.id === id);
+	const isProductInCart = useAppSelector((state) =>
+		cartSelectors.getCartProducts(state).some((p) => p.id === id)
+	);
 	const { addProductToCart } = useAddToCart();
+	const handleAddToCart = useCallback(() => {
+		addProductToCart({ ...product, count: 1 });
+	}, [addProductToCart, product]);
 
 	return (
 		<article className={s['card']}>
@@ -54,7 +59,7 @@ export const Card = ({ product }: CardProps) => {
 				<CartCounter productId={id} />
 			) : (
 				<Button
-					onClick={() => addProductToCart({ ...product, count: 1 })}
+					onClick={handleAddToCart}
 					disabled={isProductInCart}
 					className={classNames(
 						s['card__cart'],
@@ -66,4 +71,4 @@ export const Card = ({ product }: CardProps) => {
 			)}
 		</article>
 	);
-};
+});

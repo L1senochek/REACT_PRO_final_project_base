@@ -1,8 +1,9 @@
+import { memo } from 'react';
 import { Card } from '../../../entities/product';
 import s from './CardList.module.css';
 import { CardListProps } from './types';
 
-export const CardList = ({ title, products }: CardListProps) => {
+export const CardList = memo(({ title, products }: CardListProps) => {
 	if (!products.length) {
 		return <h1 className='header-title'>Товар не найден</h1>;
 	}
@@ -19,4 +20,4 @@ export const CardList = ({ title, products }: CardListProps) => {
 			</div>
 		</div>
 	);
-};
+});

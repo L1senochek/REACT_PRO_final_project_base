@@ -3,6 +3,7 @@ import {
 	productsActions,
 	productsSelectors,
 } from '../../../shared/store/slices/products';
+import { useCallback } from 'react';
 
 interface SortParams {
 	title: string;
@@ -13,9 +14,12 @@ export const useSort = () => {
 	const dispatch = useAppDispatch();
 	const sort = useAppSelector(productsSelectors.getSort);
 
-	const setSort = (newSort: Sort) => {
-		dispatch(productsActions.setSort(newSort));
-	};
+	const setSort = useCallback(
+		(newSort: Sort) => {
+			dispatch(productsActions.setSort(newSort));
+		},
+		[dispatch]
+	);
 
 	const sortParams: SortParams[] = [
 		{ title: 'Дешевые', value: 'low-price' },

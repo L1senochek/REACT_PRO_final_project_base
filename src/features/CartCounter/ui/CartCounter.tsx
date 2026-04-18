@@ -4,8 +4,9 @@ import classNames from 'classnames';
 import { CartCounterProps } from './types';
 import { Button } from '../../../shared/ui/Button';
 import { Input } from '../../../shared/ui/Input';
+import { memo } from 'react';
 
-export const CartCounter = ({ productId }: CartCounterProps) => {
+export const CartCounter = memo(({ productId }: CartCounterProps) => {
 	const { count, stock, handleSetCount, handleIncrement, handleDecrement } =
 		useCount(productId);
 
@@ -32,4 +33,4 @@ export const CartCounter = ({ productId }: CartCounterProps) => {
 			</Button>
 		</div>
 	);
-};
+});

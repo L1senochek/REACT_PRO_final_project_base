@@ -7,14 +7,16 @@ import { cartActions } from '../../../../../shared/store/slices/cart';
 import { CartCounter } from '../../../../../features/CartCounter';
 import { CartItemProps } from './types';
 import { Button } from '../../../../../shared/ui/Button';
+import { memo, useCallback } from 'react';
 
-export const CartItem = ({ product }: CartItemProps) => {
+export const CartItem = memo(({ product }: CartItemProps) => {
 	const dispatch = useDispatch();
 	const { id, name, images, price, discount } = product;
 
-	const handleDelete = () => {
+	const handleDelete = useCallback(() => {
 		dispatch(cartActions.deleteCartProduct(id));
-	};
+	}, [dispatch, id]);
+
 	return (
 		<div className={classNames(s['cart-item'])}>
 			<div className={classNames(s['cart-item__desc'])}>
@@ -49,12 +51,13 @@ export const CartItem = ({ product }: CartItemProps) => {
 						</div>
 						<Button
 							variant='unstyled'
+							onClick={handleDelete}
 							className={classNames(s['cart-item__bnt-trash'])}>
-							<TrashIcon onClick={handleDelete} />
+							<TrashIcon />
 						</Button>
 					</div>
 				</div>
 			</div>
 		</div>
 	);
-};
+});
