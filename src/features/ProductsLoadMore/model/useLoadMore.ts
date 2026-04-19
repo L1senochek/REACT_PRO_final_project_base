@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useLayoutEffect } from 'react';
+import { RefObject, useCallback, useLayoutEffect, useTransition } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../shared/store/utils';
 import { useProducts } from '../../../shared/store/hooks/useProducts';
 import {
@@ -14,14 +14,17 @@ export const useLoadMore = ({ ref }: UseLoadMoreParams) => {
 	const dispatch = useAppDispatch();
 	const { products, isFetching, productsCount } = useProducts();
 	const page = useAppSelector(productsSelectors.getPage);
+	const [isPending, startTransition] = useTransition();
 
 	const isEndOfList = products.length >= productsCount;
 
 	const fetchMoreProducts = useCallback(() => {
 		if (!isEndOfList && !isFetching) {
-			dispatch(productsActions.setPage(page + 1));
+			startTransition(() => {
+				dispatch(productsActions.setPage(page + 1));
+			});
 		}
-	}, [isEndOfList, isFetching, page, dispatch]);
+	}, [isEndOfList, isFetching, page, dispatch, startTransition]);
 
 	useLayoutEffect(() => {
 		let observer: IntersectionObserver | undefined = undefined;
@@ -42,5 +45,5 @@ export const useLoadMore = ({ ref }: UseLoadMoreParams) => {
 		};
 	}, [fetchMoreProducts, isEndOfList, products.length, ref]);
 
-	return { isEndOfList, isFetching };
+	return { isEndOfList, isFetching: isFetching || isPending };
 };
