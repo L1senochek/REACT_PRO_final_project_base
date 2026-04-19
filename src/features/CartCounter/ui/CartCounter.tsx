@@ -34,3 +34,5 @@ export const CartCounter = memo(({ productId }: CartCounterProps) => {
 		</div>
 	);
 });
+
+CartCounter.displayName = 'CartCounter';

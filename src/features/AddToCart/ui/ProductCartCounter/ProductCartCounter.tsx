@@ -43,3 +43,5 @@ export const ProductCartCounter = memo(
 		);
 	}
 );
+
+ProductCartCounter.displayName = 'ProductCartCounter';

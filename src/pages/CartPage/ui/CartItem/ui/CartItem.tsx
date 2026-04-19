@@ -61,3 +61,5 @@ export const CartItem = memo(({ product }: CartItemProps) => {
 		</div>
 	);
 });
+
+CartItem.displayName = 'CartItem';

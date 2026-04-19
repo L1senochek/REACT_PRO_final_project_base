@@ -21,3 +21,5 @@ export const CardList = memo(({ title, products }: CardListProps) => {
 		</div>
 	);
 });
+
+CardList.displayName = 'CardList';

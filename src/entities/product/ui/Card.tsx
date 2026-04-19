@@ -105,3 +105,5 @@ export const Card = memo(({ product }: CardProps) => {
 		</article>
 	);
 });
+
+Card.displayName = 'Card';

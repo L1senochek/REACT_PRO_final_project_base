@@ -22,3 +22,5 @@ export const Sort = memo(() => {
 		</select>
 	);
 });
+
+Sort.displayName = 'Sort';
