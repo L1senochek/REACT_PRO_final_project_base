@@ -24,6 +24,7 @@ export const SignUpForm: FC = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const emailInputRef = useRef<HTMLInputElement | null>(null);
+	const signUpFailureCountRef = useRef(0);
 	const [signUpRequestFn] = useSignUpMutation();
 	const {
 		control,
@@ -38,13 +39,17 @@ export const SignUpForm: FC = () => {
 	});
 
 	useEffect(() => {
-		emailInputRef.current?.focus();
+		const frameId = window.requestAnimationFrame(() => {
+			emailInputRef.current?.focus();
+		});
+		return () => window.cancelAnimationFrame(frameId);
 	}, []);
 
 	const submitHandler: SubmitHandler<SignUpFormValues> = async (values) => {
 		try {
 			const response = await signUpRequestFn(values).unwrap();
 
+			signUpFailureCountRef.current = 0;
 			dispatch(userActions.setUser(response.user));
 			dispatch(
 				userActions.setAccessToken({ accessToken: response.accessToken })
@@ -53,12 +58,16 @@ export const SignUpForm: FC = () => {
 			toast.success('Вы успешно зарегистрированы!');
 			navigate('/');
 		} catch (error) {
-			toast.error(
-				getMessageFromError(
-					error,
-					'Не известная ошибка при регистрации пользователя'
-				)
+			signUpFailureCountRef.current += 1;
+			const baseMessage = getMessageFromError(
+				error,
+				'Не известная ошибка при регистрации пользователя'
 			);
+			const hint =
+				signUpFailureCountRef.current >= 3
+					? ' Возможно, этот email уже занят — попробуйте другой.'
+					: '';
+			toast.error(baseMessage + hint);
 		}
 	};
 
