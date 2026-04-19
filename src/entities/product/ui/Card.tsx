@@ -9,10 +9,12 @@ import { LikeButton } from '../../../features/ProductLike';
 import { CartCounter } from '../../../features/CartCounter';
 import { CardProps } from './types';
 import { Button } from '../../../shared/ui/Button';
-import { memo, useCallback } from 'react';
+import { Modal } from '../../../shared/ui/Modal';
+import { memo, useCallback, useState } from 'react';
 
 export const Card = memo(({ product }: CardProps) => {
-	const { discount, price, name, tags, id, images } = product;
+	const { discount, price, name, tags, id, images, description } = product;
+	const [isInfoOpen, setIsInfoOpen] = useState(false);
 	const isProductInCart = useAppSelector((state) =>
 		cartSelectors.getCartProducts(state).some((p) => p.id === id)
 	);
@@ -20,6 +22,9 @@ export const Card = memo(({ product }: CardProps) => {
 	const handleAddToCart = useCallback(() => {
 		addProductToCart({ ...product, count: 1 });
 	}, [addProductToCart, product]);
+
+	const openInfo = useCallback(() => setIsInfoOpen(true), []);
+	const closeInfo = useCallback(() => setIsInfoOpen(false), []);
 
 	return (
 		<article className={s['card']}>
@@ -55,6 +60,34 @@ export const Card = memo(({ product }: CardProps) => {
 					<h3 className={s['card__name']}>{name}</h3>
 				</div>
 			</Link>
+			<Button
+				type='button'
+				variant='ghost'
+				fullWidth
+				onClick={openInfo}
+				className={classNames(s['card__info-btn'])}>
+				О товаре
+			</Button>
+			<Modal
+				isOpen={isInfoOpen}
+				onClose={closeInfo}
+				contentClassName={s['info-modal']}>
+				<img
+					src={images}
+					alt={name}
+					className={s['info-modal__img']}
+					loading='lazy'
+				/>
+				<h2 className={s['info-modal__title']}>{name}</h2>
+				<Price price={price} discountPrice={discount} />
+				<p className={s['info-modal__text']}>{description}</p>
+				<Link
+					className={s['info-modal__link']}
+					to={`/products/${id}`}
+					onClick={closeInfo}>
+					Перейти к товару
+				</Link>
+			</Modal>
 			{isProductInCart ? (
 				<CartCounter productId={id} />
 			) : (
