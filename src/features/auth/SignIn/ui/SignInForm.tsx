@@ -25,6 +25,7 @@ export const SignInForm: FC = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const emailInputRef = useRef<HTMLInputElement | null>(null);
+	const authFailureCountRef = useRef(0);
 	const [signInRequestFn] = useSignInMutation();
 	const {
 		control,
@@ -39,12 +40,16 @@ export const SignInForm: FC = () => {
 	});
 
 	useEffect(() => {
-		emailInputRef.current?.focus();
+		const frameId = window.requestAnimationFrame(() => {
+			emailInputRef.current?.focus();
+		});
+		return () => window.cancelAnimationFrame(frameId);
 	}, []);
 
 	const submitHandler: SubmitHandler<SignInFormValues> = async (values) => {
 		try {
 			const response = await signInRequestFn(values).unwrap();
+			authFailureCountRef.current = 0;
 			dispatch(userActions.setUser(response.user));
 			dispatch(
 				userActions.setAccessToken({ accessToken: response.accessToken })
@@ -57,12 +62,16 @@ export const SignInForm: FC = () => {
 
 			navigate('/');
 		} catch (error) {
-			toast.error(
-				getMessageFromError(
-					error,
-					'Не известная ошибка при авторизации пользователя'
-				)
+			authFailureCountRef.current += 1;
+			const baseMessage = getMessageFromError(
+				error,
+				'Не известная ошибка при авторизации пользователя'
 			);
+			const hint =
+				authFailureCountRef.current >= 3
+					? ' Проверьте email и пароль или попробуйте позже.'
+					: '';
+			toast.error(baseMessage + hint);
 		}
 	};
 
