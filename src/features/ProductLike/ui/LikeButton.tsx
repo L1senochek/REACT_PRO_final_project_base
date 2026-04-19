@@ -1,6 +1,7 @@
 import s from './LikeButton.module.css';
 import { ReactComponent as LikeSvg } from '../../../shared/assets/icons/like.svg';
 import classNames from 'classnames';
+import { useOptimistic } from 'react';
 import { useAppSelector } from '../../../shared/store/utils';
 import { userSelectors } from '../../../shared/store/slices/user';
 import {
@@ -20,21 +21,30 @@ export const LikeButton = ({ product }: LikeButtonProps) => {
 	const [deleteLike] = useDeleteLikeProductMutation();
 
 	const isLike = product?.likes?.some((l) => l.userId === user?.id);
+	const [optimisticIsLike, setOptimisticIsLike] = useOptimistic(
+		Boolean(isLike),
+		(_, nextValue: boolean) => nextValue
+	);
 
 	const toggleLike = async () => {
 		if (!accessToken) {
 			toast.warning('Вы не авторизованы');
 			return;
 		}
+
+		const nextLikeState = !optimisticIsLike;
+		setOptimisticIsLike(nextLikeState);
+
 		let response;
-		if (isLike) {
-			response = await deleteLike({ id: `${product.id}` });
-		} else {
+		if (nextLikeState) {
 			response = await setLike({ id: `${product.id}` });
+		} else {
+			response = await deleteLike({ id: `${product.id}` });
 		}
 
 		if (response.error) {
 			const error = response.error as IErrorResponse;
+			setOptimisticIsLike(Boolean(isLike));
 			toast.error(error.data.message);
 		}
 	};
@@ -43,7 +53,7 @@ export const LikeButton = ({ product }: LikeButtonProps) => {
 		<Button
 			variant='unstyled'
 			className={classNames(s['card__favorite'], {
-				[s['card__favorite_is-active']]: isLike,
+				[s['card__favorite_is-active']]: optimisticIsLike,
 			})}
 			onClick={toggleLike}>
 			<LikeSvg />
