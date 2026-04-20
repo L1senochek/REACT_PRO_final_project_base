@@ -4,6 +4,19 @@
 
 - `npm i` - установка зависимостей
 - `npm run start` - запуск проекта
+- `npm run start:swc` - запуск проекта через Vite + SWC
+
+## Альтернативная сборка (SWC)
+
+- `npm run build` - production-сборка через Webpack (папка `dist`)
+- `npm run build:swc` - production-сборка через Vite + SWC (папка `dist-swc`)
+
+### Сравнение build time и output-size
+
+Сборщик Webpack: webpack 5.93.0 compiled in 13058 ms
+Сборщик Vite + SWC: built in 1.21s
+
+Итог: сборка через Vite + SWC быстрее
 
 ## Домашнее задание 1
 
