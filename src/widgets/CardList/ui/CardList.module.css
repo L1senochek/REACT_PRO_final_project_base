@@ -1,5 +1,6 @@
 .card-list {
 	display: block;
+	padding: 0 1%;
 }
 
 .card-list__title {
@@ -13,7 +14,7 @@
 .card-list__header {
 	display: flex;
 	align-items: center;
-	margin-bottom: 20px;
+	margin: 20px;
 }
 
 .card-list__items {

@@ -1,0 +1,10 @@
+.button-back {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100px;
+	height: 40px;
+	background-color: #ffe44d;
+	border-radius: 55px;
+	cursor: pointer;
+}

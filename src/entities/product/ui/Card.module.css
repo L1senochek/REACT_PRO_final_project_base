@@ -2,12 +2,14 @@
 	position: relative;
 	display: flex;
 	flex-direction: column;
+	justify-content: space-between;
 	align-items: flex-start;
 	gap: 20px;
 	min-height: 700px;
 
 	/* width: 236px; */
 	padding: 20px 10px;
+	background-color: #ffe44d24;
 	border-radius: 10px;
 }
 
@@ -50,6 +52,8 @@
 
 .card__sticky {
 	position: absolute;
+	display: flex;
+	gap: 10px;
 	padding: 10px;
 }
 
@@ -68,10 +72,15 @@
 }
 
 .card__cart {
+	width: 50%;
 	margin-top: auto;
 }
 
 .card__link {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	min-height: 80%;
 	color: currentcolor;
 	text-decoration: none;
 }
@@ -143,4 +152,13 @@
 	font-size: 14px;
 	text-decoration: underline;
 	text-underline-offset: 2px;
+}
+
+.card__footer-buttons {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	gap: 20px;
+	width: 100%;
 }

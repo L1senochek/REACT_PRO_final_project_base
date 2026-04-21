@@ -83,7 +83,7 @@ export const Modal: FC<ModalProps> = ({
 					className={s.closeButton}
 					onClick={onCloseRef.current}
 					aria-label='Close modal'>
-					&times;
+					x
 				</button>
 				{children}
 			</div>

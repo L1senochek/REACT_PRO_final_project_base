@@ -60,14 +60,6 @@ export const Card = memo(({ product }: CardProps) => {
 					<h3 className={s['card__name']}>{name}</h3>
 				</div>
 			</Link>
-			<Button
-				type='button'
-				variant='ghost'
-				fullWidth
-				onClick={openInfo}
-				className={classNames(s['card__info-btn'])}>
-				О товаре
-			</Button>
 			<Modal
 				isOpen={isInfoOpen}
 				onClose={closeInfo}
@@ -88,20 +80,30 @@ export const Card = memo(({ product }: CardProps) => {
 					Перейти к товару
 				</Link>
 			</Modal>
-			{isProductInCart ? (
-				<CartCounter productId={id} />
-			) : (
+			<div className={s['card__footer-buttons']}>
 				<Button
-					onClick={handleAddToCart}
-					disabled={isProductInCart}
-					className={classNames(
-						s['card__cart'],
-						s['card__btn'],
-						s['card__btn_type_primary']
-					)}>
-					В корзину
+					type='button'
+					variant='ghost'
+					fullWidth
+					onClick={openInfo}
+					className={classNames(s['card__info-btn'])}>
+					О товаре
 				</Button>
-			)}
+				{isProductInCart ? (
+					<CartCounter productId={id} />
+				) : (
+					<Button
+						onClick={handleAddToCart}
+						disabled={isProductInCart}
+						className={classNames(
+							s['card__cart'],
+							s['card__btn'],
+							s['card__btn_type_primary']
+						)}>
+						В корзину
+					</Button>
+				)}
+			</div>
 		</article>
 	);
 });

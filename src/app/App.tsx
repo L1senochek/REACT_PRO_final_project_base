@@ -11,15 +11,17 @@ export const App = () => {
 	return (
 		<>
 			<Header />
-			<Sort />
-			<Outlet />
-			<ToastContainer
-				position='top-right'
-				autoClose={5000}
-				hideProgressBar={false}
-				pauseOnHover
-				theme='colored'
-			/>
+			<main className={'main'}>
+				<Sort />
+				<Outlet />
+				<ToastContainer
+					position='top-right'
+					autoClose={5000}
+					hideProgressBar={false}
+					pauseOnHover
+					theme='colored'
+				/>
+			</main>
 			<Footer />
 		</>
 	);

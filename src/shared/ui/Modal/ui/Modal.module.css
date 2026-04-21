@@ -11,8 +11,12 @@
 
 .content {
 	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 	width: 100%;
 	max-width: 560px;
+	min-height: 500px;
 	padding: 24px;
 	background: #ffffff;
 	border-radius: 16px;
