@@ -11,13 +11,6 @@
 - `npm run build` - production-сборка через Webpack (папка `dist`)
 - `npm run build:swc` - production-сборка через Vite + SWC (папка `dist-swc`)
 
-### Сравнение build time и output-size
-
-Сборщик Webpack: webpack 5.93.0 compiled in 13058 ms
-Сборщик Vite + SWC: built in 1.21s
-
-Итог: сборка через Vite + SWC быстрее
-
 ## Домашнее задание 1
 
 ### Декомпозиция проекта, работа с хуками useState, useEffect
@@ -174,3 +167,61 @@
 [x] Возможность добавления в корзину товаров со страницы каталога. (2 балла)
 [x] Возможность добавления в корзину товара со страницы каталога больше одной штуки (кнопка «В корзину» меняется на счетчик добавляемого товара). (2 балла)
 [x] Возможность добавления в корзину со страницы товара по макету. (2 балла)
+
+
+## Сделано:
+
+- Вынесены переиспользуемые UI-компоненты в `src/shared/ui`
+- Код  разделен по слоям в соответствие fsd `app/`, `pages/`, `widgets/`, `features/`, `entities/`, `shared/`
+- Убраны лишние prop-chain
+- В `shared/ui` только компоненты:
+    - без бизнес-логики,
+    - без работы с API,
+    - без доступа к стору
+- Фичи изолированы в отдельных папках.
+- Оптимизация рендеров
+    - Обернуты нужные компоненты в `React.memo`.
+- В списках товаров/корзины использованы `useMemo`/`useCallback`
+- React.Portal для модалки
+    - В `public/index.html` добавлен `<div id="modal-root"></div>`
+    - Создано модальное окно через `ReactDOM.createPortal` в `src/shared/ui/Modal`
+    - Закрытие работает по крестику, клику по overlay, клавише `Esc`
+    - ![img.png](public/modal.png)
+- Использован `useRef` для хранения значения между рендерами
+- Реализован `autofocus` на инпут формы (логин/регистрация)
+    - ![img.png](public/autofocus.png)
+- Настроена альтернативная сборка (`Vite + SWC`)
+- Реализован UX-кейс с `useOptimistic` в компоненте `<LikeButton/>`
+    - ![img.png](public/useOptimistic.png)
+
+### Структура папок:
+- `public/` - статические файлы и изображения для README/интерфейса 
+- `src/` - исходный код приложения по слоям FSD:
+    - `app/` - корневой `App` 
+    - `pages/` - страницы роутов 
+    - `widgets/` - крупные UI-блоки из нескольких фич (`Footer`, `CardList` и тп)
+    - `features/` - пользовательские сценарии и бизнес-функции (`ProductLike`, `AddToCart`, `auth`) 
+    - `entities/` - доменные сущности (`product`) 
+    - `shared/` - переиспользуемые компоненты и функции: `ui`, `api`, `store`, `hooks`, `types`, `utils` 
+- `webpack/` - конфигурация Webpack-сборки 
+- `dist/` - production-сборка через Webpack 
+- `dist-swc/` - production-сборка через Vite + SWC 
+
+### Сравнение build time:
+
+Сборщик Webpack: webpack 5.106.2 compiled with 3 warnings in 11175 ms
+![img.png](public/img.png)
+Сборщик Vite + SWC: built in 1.50s
+![img_1.png](public/img_1.png)
+
+Итог: сборка через Vite + SWC быстрее
+
+### Profiler hotspot:
+- Hotspot LikeButton:
+    - Время: 13.5ms из 18.6ms
+    - Первый рендер компонента
+    - ![img_3.png](public/hotspot2.png)
+- Hotspot Header:
+    - Время: 0.4ms из 0.7ms
+    - Хук изменился и вызывает ререндер
+    - ![img_2.png](public/hotspot1.png)
