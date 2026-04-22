@@ -1,7 +1,7 @@
 import s from './LikeButton.module.css';
 import { ReactComponent as LikeSvg } from '../../../shared/assets/icons/like.svg';
 import classNames from 'classnames';
-import { useOptimistic } from 'react';
+import { startTransition, useOptimistic } from 'react';
 import { useAppSelector } from '../../../shared/store/utils';
 import { userSelectors } from '../../../shared/store/slices/user';
 import {
@@ -33,7 +33,9 @@ export const LikeButton = ({ product }: LikeButtonProps) => {
 		}
 
 		const nextLikeState = !optimisticIsLike;
-		setOptimisticIsLike(nextLikeState);
+		startTransition(() => {
+			setOptimisticIsLike(nextLikeState);
+		});
 
 		let response;
 		if (nextLikeState) {
@@ -44,7 +46,9 @@ export const LikeButton = ({ product }: LikeButtonProps) => {
 
 		if (response.error) {
 			const error = response.error as IErrorResponse;
-			setOptimisticIsLike(Boolean(isLike));
+			startTransition(() => {
+				setOptimisticIsLike(Boolean(isLike));
+			});
 			toast.error(error.data.message);
 		}
 	};
